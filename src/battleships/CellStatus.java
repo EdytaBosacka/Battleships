@@ -4,5 +4,7 @@ public enum CellStatus {
 	EMPTY,
 	MISSED,
 	HIT,
-	HIDDEN_SHIP
+	HIDDEN_SHIP,
+	//the field around the ship
+	LOCKED
 }
