@@ -10,16 +10,20 @@ public class Computer {
 
 	private Computer() {
 		board = new CellStatus[10][10];
-		for (int x = 0; x < 10; x++) {
-			for (int y = 0; y < 10; y++) {
-				board[x][y] = CellStatus.EMPTY;
-			}
-		}
+		emptyBoard();
 		random = new Random();
 	}
 
 	public static Computer getInstance() {
 		return INSTANCE;
+	}
+	
+	public void emptyBoard() {
+		for (int x = 0; x < 10; x++) {
+			for (int y = 0; y < 10; y++) {
+				board[x][y] = CellStatus.EMPTY;
+			}
+		}
 	}
 
 	public void initBoard() {
@@ -32,12 +36,16 @@ public class Computer {
 		return board[x][y];
 	}
 
-	public void shotCell(int x, int y) {
+	public CellStatus shotCell(int x, int y) {
 		if (board[x][y] == CellStatus.EMPTY || board[x][y] == CellStatus.LOCKED) {
 			board[x][y] = CellStatus.MISSED;
+			return board[x][y];
 		} else if (board[x][y] == CellStatus.HIDDEN_SHIP) {
 			board[x][y] = CellStatus.HIT;
+			return board[x][y];
 		}
+		return null;
+
 	}
 
 	private void createShip(int shipSize) {
@@ -104,4 +112,16 @@ public class Computer {
 		}
 		return true;
 	}
+
+	public boolean isGameEnded() {
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				if (board[i][j] == CellStatus.HIDDEN_SHIP) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
 }

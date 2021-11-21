@@ -1,4 +1,5 @@
 package battleships;
+import java.awt.BorderLayout;
 import java.awt.Color;
 
 import javax.swing.ImageIcon;
@@ -27,8 +28,6 @@ public class Game {
 		frame.setVisible(true);
 		frame.setResizable(false);
 		frame.setIconImage(img.getImage());
-		
-		
 	}
 
 }
