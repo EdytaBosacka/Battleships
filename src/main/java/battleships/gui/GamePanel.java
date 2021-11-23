@@ -1,10 +1,11 @@
 package battleships.gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -35,6 +36,7 @@ public class GamePanel extends JPanel implements MouseListener {
 	private Computer computer;
 	private BufferedImage background;
 	private boolean isGameEnded = false;
+	private JButton restartButton;
 	private HashMap<Integer, String> xLabels = new HashMap<>() {
 		{
 			put(0, "A");
@@ -53,12 +55,12 @@ public class GamePanel extends JPanel implements MouseListener {
 	public GamePanel(Computer computer) {
 		this.computer = computer;
 		try {
-			this.background = ImageIO.read(new File("src/resources/BattleshipBackground.jpg"));
+			this.background = ImageIO.read(new File("src/main/resources/BattleshipBackground.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		this.restartButton = createRestartButton();
 		addMouseListener(this);
-		createRestartButton();
 		setLayout(null);
 	}
 
@@ -69,6 +71,7 @@ public class GamePanel extends JPanel implements MouseListener {
 		createGrid(graphic2d);
 		createLegend(graphic2d);
 		createStatusField(graphic2d);
+		restartButton.repaint();
 	}
 
 	private void createGrid(Graphics2D g) {
@@ -124,14 +127,14 @@ public class GamePanel extends JPanel implements MouseListener {
 		if (status != null) {
 			if (isGameEnded) {
 				g.setColor(new Color(190, 247, 141));
-				g.fillRoundRect(LEGEND_X_POSITION, LEGEND_Y_POSITION + 130, STATUS_FIELD_WIDTH, STATUS_FIELD_HEIGHT + 30, 50,
-						50);
+				g.fillRoundRect(LEGEND_X_POSITION, LEGEND_Y_POSITION + 130, STATUS_FIELD_WIDTH,
+						STATUS_FIELD_HEIGHT + 30, 50, 50);
 				g.setFont(new Font("Dialog", Font.BOLD, 13));
 				g.setColor(new Color(83, 156, 20));
 				g.drawString("Congratulations!", LEGEND_X_POSITION + 25, LEGEND_Y_POSITION + 160);
 				g.drawString("You WON!", LEGEND_X_POSITION + 45, LEGEND_Y_POSITION + 190);
-				
-			}else if (status == CellStatus.HIT) {
+
+			} else if (status == CellStatus.HIT) {
 				g.setColor(new Color(255, 187, 184));
 				g.fillRoundRect(LEGEND_X_POSITION, LEGEND_Y_POSITION + 130, STATUS_FIELD_WIDTH, STATUS_FIELD_HEIGHT, 50,
 						50);
@@ -150,13 +153,26 @@ public class GamePanel extends JPanel implements MouseListener {
 		}
 
 	}
-	
-	private void createRestartButton() {
-		JButton myButton = new JButton("My Button");
-		myButton.setBounds(LEGEND_X_POSITION, LEGEND_Y_POSITION, FIELD_WIDTH, FIELD_HEIGHT);
-		myButton.revalidate();
+
+	private JButton createRestartButton() {
+		JButton myButton = new JButton("Play again");
+		myButton.setBounds(LEGEND_X_POSITION, LEGEND_Y_POSITION + 250, 4 * FIELD_WIDTH, FIELD_HEIGHT);
 		myButton.setVisible(true);
-        this.add(myButton);
+		this.add(myButton);
+		myButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				isGameEnded = false;
+				status = null;
+				computer.emptyBoard();
+				computer.initBoard();
+				repaint();
+
+			}
+
+		});
+		return myButton;
 	}
 
 	@Override
