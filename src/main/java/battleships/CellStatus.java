@@ -1,10 +1,11 @@
 package battleships;
 
-public enum CellStatus {
+public enum CellStatus
+{
 	EMPTY,
 	MISSED,
 	HIT,
 	HIDDEN_SHIP,
-	//the field around the ship
+	// the field around the ship
 	LOCKED
 }
