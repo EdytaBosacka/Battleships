@@ -14,7 +14,7 @@ public class Game
 		Computer computer = Computer.getInstance();
 		computer.initBoard();
 
-		ImageIcon img = new ImageIcon("src/main/resources/BattleshipIcon.png");
+		ImageIcon img = new ImageIcon(Game.class.getClassLoader().getResource("BattleshipIcon.png"));
 
 		JFrame frame = new JFrame("Battleships");
 		frame.setUndecorated(true);

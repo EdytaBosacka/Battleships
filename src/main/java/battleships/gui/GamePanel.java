@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -61,7 +60,7 @@ public class GamePanel extends JPanel implements MouseListener
 		this.computer = computer;
 		try
 		{
-			this.background = ImageIO.read(new File("src/main/resources/BattleshipBackground.jpg"));
+			this.background = ImageIO.read(getClass().getClassLoader().getResource("BattleshipBackground.jpg"));
 		}
 		catch (IOException e)
 		{
