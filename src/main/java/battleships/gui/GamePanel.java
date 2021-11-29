@@ -60,7 +60,7 @@ public class GamePanel extends JPanel implements MouseListener
 		this.computer = computer;
 		try
 		{
-			this.background = ImageIO.read(getClass().getClassLoader().getResource("BattleshipBackground.jpg"));
+			this.background = ImageIO.read(getClass().getClassLoader().getResource("main/resources/BattleshipBackground.jpg"));
 		}
 		catch (IOException e)
 		{
